@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hooked Model Exercise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .slot {
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Custom shapes and colors for slots and post-its */
+        .slot-name, .postit-name {
+            border-radius: 0.5rem;
+        }
+
+        .slot-description, .postit-description {
+            border-radius: 0.5rem;
+        }
+
+        .slot-examples, .postit-examples {
+            border-radius: 0.5rem;
+        }
+
+        .postit {
+            cursor: grab;
+            user-select: none;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .postit:active {
+            cursor: grabbing;
+        }
+
+        .postit.correct {
+            cursor: default;
+        }
+
+        .correct-slot {
+            border-color: #22c55e;
+            border-width: 2px;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main Container -->
+    <div class="min-h-screen p-6 sm:p-8 flex flex-col items-center">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">The Hooked Model Exercise</h1>
+            <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+                Drag the colored cards below into the correct slots to match each phase of the Hooked Model.
+            </p>
+        </header>
+
+        <!-- Quadrant Container -->
+        <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
+
+            <!-- Quadrant 1: Trigger -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition-transform transform hover:scale-[1.01] duration-300">
+                <div id="trigger-name-slot" data-quadrant="trigger" data-type="name" class="slot slot-name w-full h-12 bg-red-100 border-2 border-red-300 rounded-lg flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300 mb-4">Name</div>
+                <div class="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
+                    <div id="trigger-description-slot" data-quadrant="trigger" data-type="description" class="slot slot-description w-full sm:w-1/2 h-24 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Description</div>
+                    <div id="trigger-examples-slot" data-quadrant="trigger" data-type="examples" class="slot slot-examples w-full sm:w-1/2 h-24 bg-green-100 border-2 border-green-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Examples</div>
+                </div>
+            </div>
+
+            <!-- Quadrant 2: Action -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition-transform transform hover:scale-[1.01] duration-300">
+                <div id="action-name-slot" data-quadrant="action" data-type="name" class="slot slot-name w-full h-12 bg-red-100 border-2 border-red-300 rounded-lg flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300 mb-4">Name</div>
+                <div class="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
+                    <div id="action-description-slot" data-quadrant="action" data-type="description" class="slot slot-description w-full sm:w-1/2 h-24 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Description</div>
+                    <div id="action-examples-slot" data-quadrant="action" data-type="examples" class="slot slot-examples w-full sm:w-1/2 h-24 bg-green-100 border-2 border-green-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Examples</div>
+                </div>
+            </div>
+
+            <!-- Quadrant 4: Investment -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition-transform transform hover:scale-[1.01] duration-300">
+                <div id="investment-name-slot" data-quadrant="investment" data-type="name" class="slot slot-name w-full h-12 bg-red-100 border-2 border-red-300 rounded-lg flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300 mb-4">Name</div>
+                <div class="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
+                    <div id="investment-description-slot" data-quadrant="investment" data-type="description" class="slot slot-description w-full sm:w-1/2 h-24 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Description</div>
+                    <div id="investment-examples-slot" data-quadrant="investment" data-type="examples" class="slot slot-examples w-full sm:w-1/2 h-24 bg-green-100 border-2 border-green-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Examples</div>
+                </div>
+            </div>
+
+            <!-- Quadrant 3: Variable Reward -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition-transform transform hover:scale-[1.01] duration-300">
+                <div id="reward-name-slot" data-quadrant="reward" data-type="name" class="slot slot-name w-full h-12 bg-red-100 border-2 border-red-300 rounded-lg flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300 mb-4">Name</div>
+                <div class="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
+                    <div id="reward-description-slot" data-quadrant="reward" data-type="description" class="slot slot-description w-full sm:w-1/2 h-24 bg-blue-100 border-2 border-blue-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Description</div>
+                    <div id="reward-examples-slot" data-quadrant="reward" data-type="examples" class="slot slot-examples w-full sm:w-1/2 h-24 bg-green-100 border-2 border-green-300 rounded-xl flex items-center justify-center text-sm text-center p-2 text-gray-400 font-semibold transition-all duration-300">Examples</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Draggable Items Container -->
+        <div class="w-full max-w-6xl mt-8 p-6 bg-white rounded-xl shadow-lg">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Cards to Drag</h2>
+            <div id="postit-container" class="flex flex-wrap justify-center gap-4 sm:gap-6">
+
+                <!-- Draggable Names -->
+                <div draggable="true" id="card-name-trigger" data-quadrant="trigger" data-type="name" class="postit postit-name w-32 h-12 bg-red-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">Trigger</div>
+                <div draggable="true" id="card-name-action" data-quadrant="action" data-type="name" class="postit postit-name w-32 h-12 bg-red-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">Action</div>
+                <div draggable="true" id="card-name-reward" data-quadrant="reward" data-type="name" class="postit postit-name w-32 h-12 bg-red-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">Variable Reward</div>
+                <div draggable="true" id="card-name-investment" data-quadrant="investment" data-type="name" class="postit postit-name w-32 h-12 bg-red-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">Investment</div>
+
+                <!-- Draggable Descriptions -->
+                <div draggable="true" id="card-description-trigger" data-quadrant="trigger" data-type="description" class="postit postit-description w-48 h-24 bg-blue-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">An internal or external cue that prompts the user.</div>
+                <div draggable="true" id="card-description-action" data-quadrant="action" data-type="description" class="postit postit-description w-48 h-24 bg-blue-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">The user's behavior in anticipation of a reward.</div>
+                <div draggable="true" id="card-description-reward" data-quadrant="reward" data-type="description" class="postit postit-description w-48 h-24 bg-blue-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">An unpredictable reward that keeps users coming back.</div>
+                <div draggable="true" id="card-description-investment" data-quadrant="investment" data-type="description" class="postit postit-description w-48 h-24 bg-blue-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">An action that improves the service for the next cycle.</div>
+
+                <!-- Draggable Examples -->
+                <div draggable="true" id="card-examples-trigger" data-quadrant="trigger" data-type="examples" class="postit postit-examples w-48 h-24 bg-green-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">
+                    A notification, a feeling of boredom, or an ad.
+                </div>
+                <div draggable="true" id="card-examples-action" data-quadrant="action" data-type="examples" class="postit postit-examples w-48 h-24 bg-green-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">
+                    Clicking a link, scrolling, or taking a photo.
+                </div>
+                <div draggable="true" id="card-examples-reward" data-quadrant="reward" data-type="examples" class="postit postit-examples w-48 h-24 bg-green-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">
+                    New content, a 'like' on a post, or a new follower.
+                </div>
+                <div draggable="true" id="card-examples-investment" data-quadrant="investment" data-type="examples" class="postit postit-examples w-48 h-24 bg-green-300 text-white flex items-center justify-center text-center p-2 text-sm font-semibold hover:scale-105 transition-transform duration-300">
+                    Inviting a friend or updating a profile.
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Modal -->
+    <div id="modal" class="hidden fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-75 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm mx-auto transform transition-all duration-300 scale-95">
+            <h3 class="text-3xl font-bold text-gray-800 mb-4">Congratulations!</h3>
+            <p class="text-lg text-gray-600 mb-6">You have successfully completed the exercise and mastered the Hooked Model.</p>
+            <button id="close-modal-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const draggables = document.querySelectorAll('.postit');
+            const dropTargets = document.querySelectorAll('.slot');
+            const modal = document.getElementById('modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+
+            let completedCount = 0;
+            const totalItems = 12;
+
+            draggables.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.id);
+                    e.target.classList.add('opacity-50');
+                });
+
+                item.addEventListener('dragend', (e) => {
+                    e.target.classList.remove('opacity-50');
+                });
+            });
+
+            dropTargets.forEach(target => {
+                target.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    if (e.target.classList.contains('slot') && target.children.length === 0) {
+                        e.target.classList.add('border-green-500');
+                    }
+                });
+
+                target.addEventListener('dragleave', (e) => {
+                    if (e.target.classList.contains('slot')) {
+                        e.target.classList.remove('border-green-500');
+                    }
+                });
+
+                target.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (target.children.length > 0) return; // Prevent dropping on a filled slot
+
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    const draggedElement = document.getElementById(draggedId);
+
+                    const targetQuadrant = target.getAttribute('data-quadrant');
+                    const targetType = target.getAttribute('data-type');
+
+                    const draggedQuadrant = draggedElement.getAttribute('data-quadrant');
+                    const draggedType = draggedElement.getAttribute('data-type');
+
+                    if (draggedQuadrant === targetQuadrant && draggedType === targetType) {
+                        target.innerHTML = '';
+                        target.appendChild(draggedElement);
+                        draggedElement.style.position = 'relative';
+                        draggedElement.classList.add('correct', 'shadow-none');
+                        draggedElement.draggable = false;
+
+                        target.classList.remove('border-green-500');
+                        target.classList.add('correct-slot');
+
+                        completedCount++;
+                        if (completedCount === totalItems) {
+                            setTimeout(() => {
+                                modal.classList.remove('hidden');
+                                modal.querySelector('div').classList.add('scale-100');
+                            }, 500);
+                        }
+                    }
+                });
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>
